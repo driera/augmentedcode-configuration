@@ -9,7 +9,7 @@ This document contains all development rules and guidelines for this project, ap
 - **Progressive Revelation**: Never show all the code at once; only the next step.
 - **Type Safety**: All code must be fully typed.
 - **Simplicity First**: Use the simplest working solution; avoid unnecessary abstractions.
-- **Small Components**: Classes and methods should be small (10–20 lines max).
+- **Small Components**: Classes, methods and functions should be small (10–20 lines max).
 - **Clear Naming**: Use clear, descriptive names for all variables and functions.
 - **Incremental Changes**: Prefer incremental, focused changes over large, complex modifications.
 - **Question Assumptions**: Always question assumptions and inferences.
@@ -18,15 +18,14 @@ This document contains all development rules and guidelines for this project, ap
 
 ## 2. Code Quality & Coverage
 
-- **MANDATORY Validation**: Before EVERY commit, run `make validate` and fix ALL errors. Zero tolerance.
+- **MANDATORY Validation**: Before EVERY commit, run `make test` and fix ALL errors. Zero tolerance.
 - **Quality Requirements**: The project has strict requirements for code quality and maintainability.
 - **High Coverage**: All code must have very high test coverage; strive for 100% where practical.
 - **Pre-commit Checks**: All code must pass the following before any commit:
-    - `make check-typing`
-    - `make check-format`
-    - `make check-style`
+    - `make check-types`
+    - `make lint`
 - **TDD Workflow**: Test-Driven Development (TDD) is the default workflow: always write tests first.
-- **OOP Design**: Use Object-Oriented Programming (OOP) for all components and features.
+- **FUNCTIONAL Design**: Use Functional Programming for all components and features.
 
 ## 3. Style Guidelines
 
@@ -89,8 +88,7 @@ This document contains all development rules and guidelines for this project, ap
 
 ### Code Review & Collaboration  
 - **Pair Programming**: Prefer pairing sessions for complex features and knowledge sharing.
-- **Small Pull Requests**: Keep changes small and focused for easier review and faster integration.
-- **Code Review Standards**: All code must be reviewed before merging, following project quality standards.
+- **Small Changes**: Keep changes small and focused for easier review and faster integration.
 - **Knowledge Sharing**: Document decisions and share context with team members.
 
 ### Security Considerations
@@ -113,15 +111,13 @@ This document contains all development rules and guidelines for this project, ap
 - **Complete Coverage**: Ensure every new feature or bugfix is covered by a test.
 
 ### Test Structure & Style
-- **Test Runner**: Use pytest as the test runner.
-- **Assertion Library**: Use the expects library for assertions (BDD style).
-- **Mocking**: Use doublex and doublex-expects for mocking and spy assertions.
+- **Test Runner**: Use jest as the test runner.
+- **Testing library**: Use React testing library to encourage testing pradctices
 - **Type Hints**: All test functions and helpers must have full type hints.
 - **Focused Tests**: Keep each test focused and under 20 lines.
 - **Clear Naming**: Use clear, descriptive names for test functions and variables.
 - **No Comments**: Avoid comments; make code self-documenting through naming.
 - **Simple Helpers**: Use helper methods (e.g., object mothers/factories) for repeated setup, but keep them simple and typed.
-- **Strategic Mocking Rule**: Use `@patch` from unittest.mock ONLY for Python system modules (readline, atexit, subprocess, sys, os, etc.). Use doublex for all application code mocking. This provides clear separation: system modules = @patch, application code = doublex.
 
 ### Test Simplicity & Maintainability
 - **Simplest Setup**: Prefer the simplest test setup that covers the requirement.
@@ -147,59 +143,42 @@ This document contains all development rules and guidelines for this project, ap
 - **Post-Pass Review**: After a test passes, review for opportunities to simplify or clarify.
 - **Helper Refactoring**: Refactor test helpers and fixtures as needed to keep the suite DRY and maintainable.
 
-### Test Reference Guides
-For detailed usage and best practices, see the following guides in `docs/testing/`:
-- **expects_guide.md**: How to use the expects library for BDD-style assertions.
-- **doublex_guide.md**: How to use doublex for mocking and stubbing.
-- **doublex_expects_guide.md**: How to integrate doublex with expects for mock assertions.
-
-These guides are the canonical resources for writing and maintaining tests in this project.
-
 ## 11. Makefile Targets Usage
 
 ### Core Rule
-**NEVER** call tools like `pytest`, `black`, `mypy`, or similar directly. Always use the corresponding `make` target.
+**NEVER** call tools like `jest`, `ts`, or similar directly. Always use the corresponding `make` target.
 
 ### Available Make Targets
-- `make help` — Show this help.
-- `make local-setup` — Sets up the local environment (e.g. install git hooks)
-- `make build` — Builds the app
-- `make update` — Updates the app packages
-- `make add-package` — Installs a new package in the app. ex: make install package=XXX
-- `make up` — Runs the app
-- `make down` — Stop the FastAPI app
-- `make check-typing` — Run a static analyzer over the code to find issues
-- `make check-format` — Checks the code format
-- `make check-style` — Checks the code style
-- `make reformat` — Format python code
-- `make test-unit` — Run all unit tests
-- `make test-e2e` — Run all e2e tests
-- `make validate` — Run tests, style, and typing checks (test-unit, check-style, check-typing)
+- `make help` - Show this help.
+- `make start` - Start the development server.
+- `make start-with-fake-auth0` - Start the development server with fake Auth0
+- `make test` - Run tests
+- `make lint` - Run linter with autofix
+- `make check-dependencies` - Run circular dependencies checking
+- `make check-types`- Run type checking
 
 ### Usage Rules
-1. **Testing**: When running tests, use `make test-unit` or `make test-e2e` as appropriate.
-2. **Formatting**: For formatting, use `make reformat` or `make check-format`.
-3. **Type Checking**: For type checking, use `make check-typing`.
-4. **Style Checks**: For style checks, use `make check-style`.
-5. **Building**: For building or updating the app, use `make build` or `make update`.
-6. **Help**: If you are unsure which target to use, run `make help` to see all available options.
-7. **New Operations**: If a new operation is needed, prefer adding a new Makefile target rather than running a tool directly.
+1. **Testing**: When running tests, use `make test`.
+2. **Formatting**: For formatting, use `make lint`.
+3. **Type Checking**: For type checking, use `make check-types`.
+4. **Help**: If you are unsure which target to use, run `make help` to see all available options.
 
 ### Good vs Bad Examples
 ```sh
 # Good: Use make target for unit tests
-make test-unit
+make test
 
-# Bad: Call pytest directly
-pytest tests/unit
+# Bad: Call jest directly
+jest
 ```
 
 ## 12. Pre-Commit Validation (MANDATORY)
 
 Before ANY commit:
-1. Run `make validate`
-2. If errors exist: fix them and re-run
-3. Only commit when `make validate` passes with ZERO errors
+1. Run `make lint`
+2. Run `make check-types`
+3. If errors exist: fix them and re-run
+4. Only commit when both pass with ZERO errors
 
 ❌ **NEVER**: Commit → discover errors → fix commit
 ✅ **ALWAYS**: Validate → fix all errors → commit once
@@ -212,10 +191,10 @@ When working on this project:
 2. **Take baby steps** - one test, one file, one change at a time 👣
 3. **Always write the failing test first** (TDD) ❌➡️✅
 4. **Use make targets** - never call tools directly 🔧
-5. **Keep code small and typed** - max 20 lines per method 📏
+5. **Keep code small and typed** - max 20 lines per function/method 📏
 6. **Show your thinking process** - be conversational and progressive 💭
 7. **Question everything** - assumptions, requirements, design choices ❓
-8. **Run `make validate` before EVERY commit** - zero tolerance ✅
+8. **Run `make lint` and `make check-types` before EVERY commit** - zero tolerance ✅
 9. **Run tests automatically** after every change 🧪
 10. **Focus on simplicity** over cleverness ✨
 11. **Ask for clarification** when in doubt 🤔

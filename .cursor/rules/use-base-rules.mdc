@@ -18,9 +18,9 @@ All AI agents working on this project must follow the comprehensive development 
 
 ## What's Included in base.md
 
-- Core development principles (TDD, OOP, baby steps)
+- Core development principles (TDD, FP, baby steps)
 - Code quality and coverage requirements  
-- Testing implementation rules (pytest, expects, doublex)
+- Testing implementation rules
 - Makefile targets usage
 - Style guidelines and output formatting
 - Process requirements and mental preparation
