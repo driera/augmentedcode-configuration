@@ -1,7 +1,5 @@
 # Working with Dani
 
-> Customize this file with machine-specific guidance. It extends `AGENTS.md` and overrides the shared rules whenever they conflict.
-
 ## 1. Core Principles
 
 - **Baby Steps**: Always work in baby steps, one at a time. Never go forward more than one step.
@@ -16,6 +14,7 @@
 - **Refactoring Awareness**: Highlight opportunities for refactoring and flag functions exceeding 20 lines.
 - **Pattern Detection**: Detect and highlight repeated code patterns.
 
+
 ## 2. Code Quality & Coverage
 
 - **MANDATORY Validation**: Before EVERY commit, run `make lint`, `make check-types` and `make test` and fix ALL errors. Zero tolerance.
@@ -23,6 +22,7 @@
 - **High Coverage**: All code must have very high test coverage; strive for 100% where practical.
 - **TDD Workflow**: Test-Driven Development (TDD) is the default workflow: always write tests first.
 - **FUNCTIONAL Design**: Use Functional Programming (FP) for all components and features.
+
 
 ## 3. Style Guidelines
 
@@ -34,11 +34,13 @@
 - **Self-Documenting Code**: Avoid comments in code; rely on self-documenting names. Eliminate superficial comments (Arrange/Act/Assert, describing obvious code behavior, historical references that Git already manages).
 - **Follow project format**- Match the style and formatting of surrounding code, even if it differs from standard style guides. Consistency within a file trumps external standards.
 
+
 ## 4. Output Format Requirements
 
 - **Direct communication**: Address me as "Dani" in all communications.
 - **No Moralizing**: Never include moralizing warnings in the final answer.
 - **Progress Indicators**: When outlining plans, use numbers/metrics and emojis to indicate progress.
+
 
 ## 5. Process & Key Requirements
 
@@ -47,6 +49,7 @@
 - **Persistence**: Persist through multiple attempts until resolution.
 - **Thorough Iteration**: Break down complex thoughts and iterate thoroughly.
 - **Sequential Questions**: Only one question at a time; each question should build on previous answers.
+
 
 ## 6. Language Standards
 
@@ -60,6 +63,7 @@
   - Git commit messages
   - Test names and descriptions
 - **Professional Consistency**: This ensures global collaboration, tool compatibility, and industry best practices.
+
 
 ## 7. Development Best Practices
 
@@ -86,7 +90,8 @@
 - **E2E Tests**: Full system validation (minimal, critical user paths only).
 - **Test Pyramid**: Follow the test pyramid - many unit tests, some integration tests, few E2E tests.
 
-## 10. Test-Driven Development Rules
+
+## 8. Test-Driven Development Rules
 
 ### TDD Approach
 - **Failing Test First**: Always start with a failing test before implementing new functionality.
@@ -125,51 +130,5 @@
 ### Test Review & Refactoring
 - **Post-Pass Review**: After a test passes, review for opportunities to simplify or clarify.
 - **Helper Refactoring**: Refactor test helpers and fixtures as needed to keep the suite DRY and maintainable.
-
-## 11. Makefile Targets Usage
-
-### Core Rule
-**NEVER** call tools like `jest`, `ts`, or similar directly. Always use the corresponding `make` target.
-
-### Available Make Targets
-- `make help` - Show this help.
-- `make start` - Start the development server.
-- `make start-with-fake-auth0` - Start the development server with fake Auth0
-- `make test` - Run tests
-- `make lint` - Run linter with autofix
-- `make check-dependencies` - Run circular dependencies checking
-- `make check-types`- Run type checking
-
-### Usage Rules
-1. **Testing**: When running tests, use `make test`.
-2. **Formatting**: For formatting, use `make lint`.
-3. **Type Checking**: For type checking, use `make check-types`.
-4. **Help**: If you are unsure which target to use, run `make help` to see all available options.
-
-## 12. Pre-Commit Validation (MANDATORY)
-
-Before ANY commit:
-1. Run `make lint`
-2. Run `make check-types`
-3. If errors exist: fix them and re-run
-4. Only commit when both pass with ZERO errors
-
-❌ **NEVER**: Commit → discover errors → fix commit
-✅ **ALWAYS**: Validate → fix all errors → commit once
-
-## 13. Quick Reference for All AI Agents
-
-When working on this project:
-
-1. **Take baby steps** - one test, one file, one change at a time 👣
-2. **Always write the failing test first** (TDD) ❌➡️✅
-3. **Use make targets** - never call tools directly 🔧
-4. **Keep code small and typed** - max 20 lines per function/method 📏
-5. **Show your thinking process** - be conversational and progressive 💭
-6. **Question everything** - assumptions, requirements, design choices ❓
-7. **Run `make lint` and `make check-types` before EVERY commit** - zero tolerance ✅
-8. **Run tests automatically** after every change 🧪
-9.  **Focus on simplicity** over cleverness ✨
-10. **Ask for clarification** when in doubt 🤔
 
 Remember: This is a high-quality, test-driven, incremental development environment. Quality over speed, clarity over cleverness, baby steps over big leaps. 
